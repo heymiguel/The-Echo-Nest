@@ -10,9 +10,13 @@
 console.log("murderworld online!");
 var murderworld ={};
 
+murderworld.echoApi 		= "IIDEXTACNIDGJQBQQ";
+murderworld.echoArtistsUrl 	= "http://developer.echonest.com/api/v4/artist/search?";
+
 // declare artists here
 
-murderworld.artistsArray = [
+murderworld.artistsArray = function (){
+	var artistList = [
 	"Absolutely Free ",
 	"Amy Millan ",
 	"Andy Kim ",
@@ -33,13 +37,13 @@ murderworld.artistsArray = [
 	"Farao", 
 	"Feist", 
 	"Fucked Up", 
-	"Gold and Youth ",
+	"Gold and Youth",
 	"Gord Downie, The Sadies, And The Conquering Sun", 
 	"Hayden", 
 	"In The Valley Below", 
 	"Jason Collett", 
 	"Kevin Drew", 
-	"Los Campesinos!", 
+	"Los Campesinos!" 
 	"Lowell" ,
 	"Memphis" ,
 	"Mia Maestro" ,
@@ -67,7 +71,10 @@ murderworld.artistsArray = [
 	"Years",
 	"Zeus",
 	"Zulu Winter" 
-];
+	];
+	murderworld.genreChecker(artistList);
+};
+
 
 // end artists Array
 
@@ -77,11 +84,43 @@ murderworld.artistsArray = [
 // accepts an array
 // shoots value to ajax call
 // makes call
-// outputs two variables: the name of the artist, and the genre.
-// output used for future use.
+// outputs two variables: the name of the artist, and the genres associated
+// output used for future functions.
 
 murderworld.genreChecker = function (artistList){
-	console.log
+	console.log("entering Genre Checker!");
+	
+	// verify array integrity
+	console.log(artistList);
+	$.each(artistList, function(index, item){
+		var artist 	= item;
+		var genre 	= "";	
+		
+		
+		$.ajax({
+			url: murderworld.echoArtistsUrl,
+			type: "GET",
+			dataType: "json",
+			data:{
+				api_key: murderworld.echoApi,
+				format:"json",
+				name: artist,
+				bucket: "genre"
+			},
+			success: function (rawGenre){
+				var genre 		= (rawGenre.response.artists[0].genres); // this is an array
+				var genreLength	= genre.length;
+				console.log("this artist's name is:" + artist);
+				console.log("there are " + genreLength + " genres associated with this artist");
+				console.log(genre);
+				console.log("exiting ajax call");	
+				//call arrangement function or printing function here
+			}
+		});
+		
+		
+	});
+	console.log("exiting genre checker");
 };
 
 // end genre checker
@@ -92,6 +131,7 @@ murderworld.genreChecker = function (artistList){
 
 // initializers
 murderworld.init = function (){
+	murderworld.artistsArray();
 
 };
 
