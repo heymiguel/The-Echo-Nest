@@ -43,7 +43,7 @@ murderworld.artistsArray = function (){
 	"In The Valley Below", 
 	"Jason Collett", 
 	"Kevin Drew", 
-	"Los Campesinos!" 
+	"Los Campesinos!" ,
 	"Lowell" ,
 	"Memphis" ,
 	"Mia Maestro" ,
@@ -96,7 +96,6 @@ murderworld.genreChecker = function (artistList){
 		var artist 	= item;
 		var genre 	= "";	
 		
-		
 		$.ajax({
 			url: murderworld.echoArtistsUrl,
 			type: "GET",
@@ -125,16 +124,10 @@ murderworld.genreChecker = function (artistList){
 
 // end genre checker
 
-
-
-
-
 // initializers
 murderworld.init = function (){
 	murderworld.artistsArray();
-
 };
-
 
 // final check to fire doc ready status
 
